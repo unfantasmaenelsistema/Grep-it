@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const pattern = patternInput.value.trim();
         const file = fileInput.value.trim();
 
-        // Validar que el patrón no esté vacío
         if (!pattern) {
             outputCommand.textContent = '';
             errorMessage.textContent = 'Por favor, introduce un patrón de búsqueda.';
@@ -20,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
             errorMessage.textContent = '';
         }
 
-        // Obtener las opciones seleccionadas
         const options = [];
         if (document.getElementById('option_i').checked) options.push('-i');
         if (document.getElementById('option_n').checked) options.push('-n');
@@ -31,12 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (document.getElementById('option_E').checked) options.push('-E');
         if (document.getElementById('option_o').checked) options.push('-o');
 
-        // Construir el comando
         if (options.length > 0) {
             command += ' ' + options.join(' ');
         }
         
-        // Añadir el patrón y el archivo
         command += ` "${pattern}"`;
         if (file) {
             command += ` ${file}`;
