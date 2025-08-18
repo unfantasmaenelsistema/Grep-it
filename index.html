@@ -21,7 +21,7 @@
         <div class="generator-section">
             <div class="input-group">
                 <label for="patternInput">Patrón de búsqueda:</label>
-                <input type="text" id="patternInput" placeholder="Ej: 'error' o '^[a-z]'">
+                <input type="text" id="patternInput" placeholder="Ej: 'error' o '^[a-z]' o '[0-9]$'">
             </div>
             <div class="input-group">
                 <label for="fileInput">Nombre del archivo:</label>
@@ -54,15 +54,24 @@
                     <input type="checkbox" id="option_r">
                     <label for="option_r">-r (Búsqueda recursiva)</label>
                 </div>
+                <div class="option-item">
+                    <input type="checkbox" id="option_E">
+                    <label for="option_E">-E (Expresión regular extendida)</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="option_o">
+                    <label for="option_o">-o (Mostrar solo la parte que coincide)</label>
+                </div>
             </div>
-
+            
             <button id="generateBtn">Grep-it!</button>
         </div>
-
+        
         <div class="output-section">
             <h2>Comando Generado</h2>
             <div id="outputCommand" class="output-box">
                 </div>
+            <p id="errorMessage" class="error-message"></p>
             <button id="copyBtn">Copiar</button>
         </div>
     </div>
