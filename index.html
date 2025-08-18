@@ -18,10 +18,22 @@
             <p>Construye tu comando Grep de Linux de forma interactiva.</p>
         </div>
 
+        <div class="info-section">
+            <h3>Cómo usar el Patrón de Búsqueda</h3>
+            <p>El patrón de búsqueda puede ser una palabra simple (ej: <b>error</b>) o una expresión regular para búsquedas más avanzadas. <br>Aquí tienes algunos ejemplos:</p>
+            <ul>
+                <li><b>^patrón</b>: Busca líneas que **empiezan** con "patrón".</li>
+                <li><b>patrón$</b>: Busca líneas que **terminan** con "patrón".</li>
+                <li><b>[0-9]</b>: Busca cualquier dígito.</li>
+                <li><b>[a-z]</b>: Busca cualquier letra minúscula.</li>
+                <li><b>.*</b>: Busca cualquier caracter, cualquier número de veces.</li>
+            </ul>
+        </div>
+
         <div class="generator-section">
             <div class="input-group">
                 <label for="patternInput">Patrón de búsqueda:</label>
-                <input type="text" id="patternInput" placeholder="Ej: 'error' o '^[a-z]' o '[0-9]$'">
+                <input type="text" id="patternInput" placeholder="Ej: 'error' o '^[a-z]'">
             </div>
             <div class="input-group">
                 <label for="fileInput">Nombre del archivo:</label>
