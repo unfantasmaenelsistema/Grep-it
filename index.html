@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Comandos Grep</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="logo-container">
+        <img src="logo.png" alt="Grep Generator Logo">
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Generador de Comandos Grep</h1>
+            <p>Construye tu comando Grep de Linux de forma interactiva.</p>
+        </div>
+
+        <div class="generator-section">
+            <div class="input-group">
+                <label for="patternInput">Patrón de búsqueda:</label>
+                <input type="text" id="patternInput" placeholder="Ej: 'error' o '^[a-z]'">
+            </div>
+            <div class="input-group">
+                <label for="fileInput">Nombre del archivo:</label>
+                <input type="text" id="fileInput" placeholder="Ej: log.txt">
+            </div>
+
+            <div class="options-group">
+                <h2>Opciones</h2>
+                <div class="option-item">
+                    <input type="checkbox" id="option_i">
+                    <label for="option_i">-i (Ignorar mayúsculas/minúsculas)</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="option_n">
+                    <label for="option_n">-n (Mostrar número de línea)</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="option_v">
+                    <label for="option_v">-v (Invertir búsqueda)</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="option_w">
+                    <label for="option_w">-w (Coincidencia de palabra completa)</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="option_c">
+                    <label for="option_c">-c (Contar líneas)</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="option_r">
+                    <label for="option_r">-r (Búsqueda recursiva)</label>
+                </div>
+            </div>
+
+            <button id="generateBtn">Grep-it!</button>
+        </div>
+
+        <div class="output-section">
+            <h2>Comando Generado</h2>
+            <div id="outputCommand" class="output-box">
+                </div>
+            <button id="copyBtn">Copiar</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
