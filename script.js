@@ -4,11 +4,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const patternInput = document.getElementById('patternInput');
     const fileInput = document.getElementById('fileInput');
     const outputCommand = document.getElementById('outputCommand');
+    const errorMessage = document.getElementById('errorMessage');
 
     generateBtn.addEventListener('click', () => {
         let command = 'grep';
         const pattern = patternInput.value.trim();
         const file = fileInput.value.trim();
+
+        // Validar que el patrón no esté vacío
+        if (!pattern) {
+            outputCommand.textContent = '';
+            errorMessage.textContent = 'Por favor, introduce un patrón de búsqueda.';
+            return;
+        } else {
+            errorMessage.textContent = '';
+        }
 
         // Obtener las opciones seleccionadas
         const options = [];
@@ -18,16 +28,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (document.getElementById('option_w').checked) options.push('-w');
         if (document.getElementById('option_c').checked) options.push('-c');
         if (document.getElementById('option_r').checked) options.push('-r');
+        if (document.getElementById('option_E').checked) options.push('-E');
+        if (document.getElementById('option_o').checked) options.push('-o');
 
-        // Construir el comando con las opciones
+        // Construir el comando
         if (options.length > 0) {
             command += ' ' + options.join(' ');
         }
         
-        // Añadir el patrón y el archivo, si existen
-        if (pattern) {
-            command += ` "${pattern}"`;
-        }
+        // Añadir el patrón y el archivo
+        command += ` "${pattern}"`;
         if (file) {
             command += ` ${file}`;
         }
