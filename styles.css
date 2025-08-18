@@ -114,3 +114,9 @@ button:hover {
     white-space: pre-wrap;
     margin-top: 15px;
 }
+
+.error-message {
+    color: #ff5858;
+    margin-top: 10px;
+    font-weight: bold;
+}
