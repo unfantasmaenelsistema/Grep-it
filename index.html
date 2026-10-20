@@ -1,93 +1,103 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Comandos Grep</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grep-it · Un Fantasma en el Sistema</title>
+<meta name="description" content="Constructor interactivo de comandos grep: patrón, opciones, contexto, recursividad y filtros, con el comando en directo y chuleta de expresiones regulares. 100% en el navegador.">
+<link rel="icon" href="icono.png">
+<script>
+  // Tema antes de pintar, para que no parpadee
+  (function(){var t=null;try{t=localStorage.getItem('grepit-theme');}catch(e){}
+  if(!t)t=(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';
+  document.documentElement.setAttribute('data-theme',t);})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="logo-container">
-        <img src="logo.png" alt="Grep Generator Logo">
-    </div>
+<header>
+  <a href="https://www.unfantasmaenelsistema.com" target="_blank" rel="noopener" class="logo">
+    <img src="icono.png" alt="Un Fantasma en el Sistema">
+    <span>Grep<b>-it</b></span>
+  </a>
+  <div class="hdr-right">
+    <a href="https://www.unfantasmaenelsistema.com" target="_blank" rel="noopener" class="site-link">unfantasmaenelsistema.com</a>
+    <button id="langToggle" class="hdr-btn" type="button">EN</button>
+    <button id="themeToggle" class="hdr-btn" type="button">☀</button>
+  </div>
+</header>
 
-    <div class="container">
-        <div class="header">
-            <h1>Generador de Comandos Grep</h1>
-            <p>Construye tu comando Grep de Linux de forma interactiva.</p>
-        </div>
+<main>
+  <section class="intro">
+    <h1 data-i18n="title">Constructor de comandos grep</h1>
+    <p class="lead" data-i18n="lead"></p>
+  </section>
 
-        <div class="info-section">
-            <h3>Cómo usar el Patrón de Búsqueda</h3>
-            <p>El patrón de búsqueda puede ser una palabra simple (ej: <b>error</b>) o una expresión regular para búsquedas más avanzadas. <br>Aquí tienes algunos ejemplos:</p>
-            <ul>
-                <li><b>^patrón</b>: Busca líneas que **empiezan** con "patrón".</li>
-                <li><b>patrón$</b>: Busca líneas que **terminan** con "patrón".</li>
-                <li><b>[0-9]</b>: Busca cualquier dígito.</li>
-                <li><b>[a-z]</b>: Busca cualquier letra minúscula.</li>
-                <li><b>.*</b>: Busca cualquier caracter, cualquier número de veces.</li>
-            </ul>
-        </div>
+  <!-- Comando en directo -->
+  <section class="cmd-bar">
+    <div class="cmd" id="cmd"></div>
+    <button class="btn" id="copyBtn" data-i18n="copy"></button>
+  </section>
 
-        <div class="generator-section">
-            <div class="input-group">
-                <label for="patternInput">Patrón de búsqueda:</label>
-                <input type="text" id="patternInput" placeholder="Ej: 'error' o '^[a-z]'">
-            </div>
-            <div class="input-group">
-                <label for="fileInput">Nombre del archivo:</label>
-                <input type="text" id="fileInput" placeholder="Ej: log.txt">
-            </div>
+  <div class="layout">
+    <section class="card">
+      <h2 data-i18n="basics">Lo básico</h2>
+      <label class="field"><span data-i18n="patternLbl"></span>
+        <input id="pattern" spellcheck="false" placeholder="error">
+      </label>
+      <label class="field"><span data-i18n="fileLbl"></span>
+        <input id="files" spellcheck="false" placeholder="registro.log">
+      </label>
+      <p class="note" id="fileNote" data-i18n="fileNote"></p>
 
-            <div class="options-group">
-                <h2>Opciones</h2>
-                <div class="option-item">
-                    <input type="checkbox" id="option_i">
-                    <label for="option_i">-i (Ignorar mayúsculas/minúsculas)</label>
-                </div>
-                <div class="option-item">
-                    <input type="checkbox" id="option_n">
-                    <label for="option_n">-n (Mostrar número de línea)</label>
-                </div>
-                <div class="option-item">
-                    <input type="checkbox" id="option_v">
-                    <label for="option_v">-v (Invertir búsqueda)</label>
-                </div>
-                <div class="option-item">
-                    <input type="checkbox" id="option_w">
-                    <label for="option_w">-w (Coincidencia de palabra completa)</label>
-                </div>
-                <div class="option-item">
-                    <input type="checkbox" id="option_c">
-                    <label for="option_c">-c (Contar líneas)</label>
-                </div>
-                <div class="option-item">
-                    <input type="checkbox" id="option_r">
-                    <label for="option_r">-r (Búsqueda recursiva)</label>
-                </div>
-                <div class="option-item">
-                    <input type="checkbox" id="option_E">
-                    <label for="option_E">-E (Expresión regular extendida)</label>
-                </div>
-                <div class="option-item">
-                    <input type="checkbox" id="option_o">
-                    <label for="option_o">-o (Mostrar solo la parte que coincide)</label>
-                </div>
-            </div>
-            
-            <button id="generateBtn">Grep-it!</button>
-        </div>
-        
-        <div class="output-section">
-            <h2>Comando Generado</h2>
-            <div id="outputCommand" class="output-box">
-                </div>
-            <p id="errorMessage" class="error-message"></p>
-            <button id="copyBtn">Copiar</button>
-        </div>
-    </div>
+      <h2 data-i18n="match">Coincidencia</h2>
+      <div class="opts" id="matchOpts"></div>
 
-    <script src="script.js"></script>
+      <h2 data-i18n="regexMode">Tipo de patrón</h2>
+      <div class="radios" id="regexMode"></div>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="output">Salida</h2>
+      <div class="opts" id="outputOpts"></div>
+
+      <h2 data-i18n="context">Contexto</h2>
+      <div class="ctx">
+        <label><span data-i18n="ctxBefore"></span><input type="number" id="ctxB" min="0" max="99" placeholder="0"></label>
+        <label><span data-i18n="ctxAfter"></span><input type="number" id="ctxA" min="0" max="99" placeholder="0"></label>
+        <label><span data-i18n="ctxBoth"></span><input type="number" id="ctxC" min="0" max="99" placeholder="0"></label>
+      </div>
+
+      <h2 data-i18n="recursive">Recursivo y filtros</h2>
+      <div class="opts" id="recOpts"></div>
+      <label class="field"><span data-i18n="includeLbl"></span><input id="include" spellcheck="false" placeholder="*.log"></label>
+      <label class="field"><span data-i18n="excludeLbl"></span><input id="exclude" spellcheck="false" placeholder="*.min.js"></label>
+      <label class="field"><span data-i18n="maxLbl"></span><input type="number" id="maxCount" min="1" placeholder="10"></label>
+    </section>
+  </div>
+
+  <section class="card cheat">
+    <h2 data-i18n="cheatTitle">Chuleta de patrones</h2>
+    <p class="note" data-i18n="cheatNote"></p>
+    <div class="chips" id="cheat"></div>
+    <h2 data-i18n="exTitle" style="margin-top:20px">Ejemplos listos</h2>
+    <div class="examples" id="examples"></div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <a href="https://www.unfantasmaenelsistema.com" target="_blank" rel="noopener" class="footer-brand">
+    <img src="icono.png" alt="Un Fantasma en el Sistema" width="28" height="28">
+    <span><b>Un Fantasma en el Sistema</b><small>unfantasmaenelsistema.com</small></span>
+  </a>
+  <div class="footer-links">
+    <span data-i18n="fLocal"></span><span>·</span>
+    <a href="https://github.com/unfantasmaenelsistema/Grep-it" target="_blank" rel="noopener">GitHub</a><span>·</span><span>MIT</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
